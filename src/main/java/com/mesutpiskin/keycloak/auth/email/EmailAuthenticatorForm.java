@@ -24,7 +24,6 @@ import org.jboss.logging.Logger;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 
-import java.security.MessageDigest;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -139,7 +138,8 @@ public class EmailAuthenticatorForm extends AbstractUsernameFormAuthenticator
         } else {
             sendEmailWithCode(context, code, ttl);
         }
-        session.setAuthNote(EmailConstants.CODE, code);
+
+        session.setAuthNote(EmailConstants.CODE, OtpHashUtils.hash(code));
         long now = System.currentTimeMillis();
         session.setAuthNote(EmailConstants.CODE_TTL, Long.toString(now + (ttl * 1000L)));
         session.setAuthNote(EmailConstants.CODE_RESEND_AVAILABLE_AFTER, Long.toString(now + (resendCooldown * 1000L)));
@@ -277,7 +277,7 @@ public class EmailAuthenticatorForm extends AbstractUsernameFormAuthenticator
             return false;
         }
 
-        if (MessageDigest.isEqual(codeContext.submittedCode().getBytes(), codeContext.storedCode().getBytes())) {
+        if (OtpHashUtils.matches(codeContext.submittedCode(), codeContext.storedCode())) {
             return true;
         }
 
