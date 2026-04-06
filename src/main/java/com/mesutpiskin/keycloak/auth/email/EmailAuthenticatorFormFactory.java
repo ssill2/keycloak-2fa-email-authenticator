@@ -106,7 +106,10 @@ public class EmailAuthenticatorFormFactory implements AuthenticatorFactory {
                         ProviderConfigProperty.STRING_TYPE, String.valueOf(EmailConstants.DEFAULT_RESEND_COOLDOWN)),
                 new ProviderConfigProperty(EmailConstants.MAX_ATTEMPTS, "Max Code Attempts",
                         "The maximum number of invalid code attempts before the code is invalidated and a new one must be requested.",
-                        ProviderConfigProperty.STRING_TYPE, String.valueOf(EmailConstants.DEFAULT_MAX_ATTEMPTS)));
+                        ProviderConfigProperty.STRING_TYPE, String.valueOf(EmailConstants.DEFAULT_MAX_ATTEMPTS)),
+                new ProviderConfigProperty(EmailConstants.SKIP_SETUP, "Skip Setup",
+                        "When enabled, users with an email address are considered configured without needing to complete the enrollment flow. Useful for admin-enforced 2FA.",
+                        ProviderConfigProperty.BOOLEAN_TYPE, String.valueOf(EmailConstants.DEFAULT_SKIP_SETUP)));
     }
 
     @Override

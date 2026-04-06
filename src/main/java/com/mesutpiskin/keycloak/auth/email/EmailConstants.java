@@ -153,6 +153,19 @@ public final class EmailConstants {
 	public static final boolean DEFAULT_ENABLE_FALLBACK = true;
 
 	/**
+	 * Configuration key for skipping the setup required action.
+	 * When enabled, users with an email address are considered configured
+	 * without needing to complete the enrollment flow. Useful for
+	 * admin-enforced 2FA where all users already have email addresses.
+	 */
+	public static final String SKIP_SETUP = "skipSetup";
+
+	/**
+	 * Default skip-setup setting (enabled, so users with an email skip enrollment).
+	 */
+	public static final boolean DEFAULT_SKIP_SETUP = true;
+
+	/**
 	 * Millisecond rounding offset used for converting milliseconds to seconds.
 	 * Adding 999ms before division ensures proper ceiling rounding.
 	 */
