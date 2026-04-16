@@ -314,6 +314,13 @@ public class EmailAuthenticatorForm extends AbstractUsernameFormAuthenticator
         if (secondsToExpose != null && secondsToExpose > 0L)
             form.setAttribute("resendAvailableInSeconds", secondsToExpose);
 
+        AuthenticatorConfigModel config = context.getAuthenticatorConfig();
+        Map<String, String> configValues = config != null && config.getConfig() != null
+                ? config.getConfig()
+                : Map.of();
+        int codeLength = resolvePositiveInt(configValues, EmailConstants.CODE_LENGTH, EmailConstants.DEFAULT_LENGTH);
+        form.setAttribute("codeLength", codeLength);
+
         return form;
     }
 
