@@ -20,6 +20,7 @@ import org.keycloak.models.RoleModel;
 import org.keycloak.models.UserModel;
 
 import jakarta.ws.rs.core.MultivaluedMap;
+import org.keycloak.utils.KeycloakSessionUtil;
 
 /**
  * Conditional email authenticator that decides whether to enforce OTP based on
@@ -277,8 +278,8 @@ public class ConditionalEmailAuthenticatorForm extends EmailAuthenticatorForm {
         if (roleName == null) {
             return false;
         }
-
-        RoleModel role = getRoleFromString(realm, roleName);
+        
+        RoleModel role = getRoleFromString(KeycloakSessionUtil.getKeycloakSession(), realm, roleName);
         if (role != null) {
             return user.hasRole(role);
         }
